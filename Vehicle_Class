@@ -1,0 +1,232 @@
+
+//Main
+//Vehicle
+//Point
+//Car
+//Airplane
+//Train
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+	    //TestCode
+	    Vehicle v = new Vehicle();
+	    Vehicle h = new Vehicle();
+	    System.out.println(v.distanceTo(h));
+	}
+}
+
+public class Vehicle 
+{
+    // It should contain the number of seats, the current number of passengers, currentPosition as a Point,
+    //destination as a Point, top speed in mph (int), and a communicate() method. In any vehicle, the driver 
+    //can attempt to communicate with other vehicles by shouting at them, "Hey you!" (we will print this message
+    //to the screen). Vehicles should contain a toString() method that returns "This is a vehicle."
+    
+    int seats;
+    int passengers;
+    Point currentPosition;
+    Point destination;
+    int speed;
+    
+    public Vehicle()
+    {
+        seats = 0;
+        passengers = 0;
+        Point currentPosition = new Point();
+        Point destination = new Point();
+        speed = 0;
+    }
+    
+    public Vehicle(int a, int b, Point c, Point d, int e)
+    {
+        seats = a;
+        passengers = b;
+        currentPosition = new Point(c.x,c.y);
+        destination = new Point(d.x,d.y);
+        speed = e;
+    }
+    
+    public void communicate()
+    {
+        System.out.println("Hey you!");
+    }
+    
+    public String toString()
+    {
+        return "This is a vehicle.";
+    }
+    
+    public int speedCompareTo(Vehicle v) 
+    {
+        return (speed-v.speed);
+    }
+    
+    public int speedCompareTo(Airplane a) 
+    {
+        return (speed-a.speed);
+    }
+    
+    public int speedCompareTo(Car c) 
+    {
+        return (speed-c.speed);
+    }
+    
+    public int speedCompareTo(Train t) 
+    {
+        return (speed-t.speed);
+    }
+    
+    public int distanceTo(Vehicle v)
+    {
+        return (int) currentPosition.distance(v.currentPosition);
+    }
+    
+    
+}
+
+public class Point 
+{
+    int x;
+    int y;
+    
+    public Point()
+    {
+        x = 0;
+        y=  0;
+    }
+    
+    public Point(int a, int b)
+    {
+        x = a;
+        y = b;
+    }
+    
+    public String toString()
+    {
+        return ("(" + x + "," + y + ")");
+    }
+    
+    public int distance(Point p)
+    {
+        return (int)(Math.sqrt((p.x - x)*(p.x - x) + (p.y - y)*(p.y - y)));
+    }
+    
+    
+
+}
+
+public class Car extends Vehicle
+{
+    int doors;
+    String engine;
+    
+    public Car()
+    {
+        seats = 0;
+        passengers = 0;
+        Point currentPosition = new Point();
+        Point destination = new Point();
+        speed = 0;
+        doors = 0;
+        engine = "";
+    
+    }
+    
+    public Car(int a, int b, Point c, Point d, int e, int f, String g)
+    {
+        seats = a;
+        passengers = b;
+        currentPosition = new Point(c.x,c.y);
+        destination = new Point(d.x,d.y);
+        speed = e;
+        doors = f;
+        engine = g;
+    }
+    
+    public void communicate()
+    {
+        System.out.println("Honk honk!");
+    }
+    
+    public String toString()
+    {
+        return  "This is a " + engine + " car with " + doors + " doors.";
+    }
+}
+
+public class Airplane extends Vehicle
+{
+    String flightNum;
+    static int flightCount;
+    public Airplane()
+    {
+        seats = 0;
+        passengers = 0;
+        Point currentPosition = new Point();
+        Point destination = new Point();
+        speed = 0;
+        flightNum = "A000";
+    }
+    
+    public Airplane(int a, int b, Point c, Point d, int e)
+    {
+        seats = a;
+        passengers = b;
+        Point currentPosition = new Point(c.x,c.y);
+        Point destination = new Point(d.x,d.y);
+        speed = e;
+        flightNum = "A00" + flightCount ;
+        
+    }
+    
+    public void communicate()
+    {
+        System.out.println("Tower, this is flight A101. Requesting permission to land.");
+    }
+    
+    public String toString()
+    {
+        return "This is an airplane, flight number A101.";
+    }
+    
+    
+}
+
+public class Train extends Vehicle
+{
+    int boxcars;
+    
+    public Train()
+    {
+        seats = 0;
+        passengers = 0;
+        Point currentPosition = new Point();
+        Point destination = new Point();
+        speed = 0;
+        boxcars = 0;
+
+    }
+    
+    public Train(int a, int b, Point c, Point d, int e, int f)
+    {
+        seats = a;
+        passengers = b;
+        currentPosition = new Point(c.x,c.y);
+        destination = new Point(d.x,d.y);
+        speed = e;
+        boxcars = f;
+    }
+    
+    public void communicate()
+    {
+        System.out.println("I think I can, I think I can!");
+    }
+    
+    public String toString()
+    {
+        return "This is a train, all aboard!";
+    }
+}
+
