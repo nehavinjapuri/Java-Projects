@@ -1,0 +1,185 @@
+//Part 1
+//Part 2
+//Part 3
+//Part 4
+//Part 5
+//Part 6
+//Part 7
+//Part 8
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+	    //Task 6
+	    BankAccount[] d = new BankAccount[500];
+	    for (int i = 0; i<500;i++)
+	    {
+	        d[i] = new BankAccount((i+1),("Acct"+(i+1)));
+	    }
+	    
+	    for (int i = 0; i< 500; i++)
+	    {
+	        System.out.println(d[i].toString());
+	    }
+	    
+	    //Task 4
+	    BankAccount a = new BankAccount(50,"Al");
+	    BankAccount b = new BankAccount(25,"Bob");
+	    BankAccount c = new BankAccount(44,"Carl");
+
+	}
+System.out.println("");
+	    System.out.println("");
+	    //Task 8
+	    BankAccount[] total = new BankAccount[100];
+	    int count = 0;
+	    System.out.println("Enter the name: ");
+	    Scanner in = new Scanner(System.in);
+
+        String name = in.nextLine();
+	    for (int i = 0; i <1000; i++)
+	    {
+
+	        System.out.println("");
+	        System.out.println("1. Create new account");
+	        System.out.println("2. View all accounts");
+	        System.out.println("3. Quit");
+	        System.out.println("Enter your selection: ");
+	        
+	        int s = in.nextInt();
+            if (s == 1)
+            {
+                
+                
+                System.out.println("Enter the balance: ");
+                double bal = in.nextDouble();
+                
+                BankAccount x = new BankAccount(bal,name);
+                total[count] = x;
+                count++;
+
+            }
+            
+            if (s==2)
+            {
+                for (int j = 0; j< count; j++)
+	            {
+	                System.out.println(total[j].toString());
+	            }
+            }
+            
+            if (s==3)
+            {
+                i = 10000;
+            }
+            
+            System.out.flush();  
+
+            
+	    }
+
+}
+
+public class BankAccount 
+{
+    
+    //Task 1
+    private double balance;
+    private String name;
+    private int accountNumber;
+    private static int accountsCreated = 0;
+    
+    //Task 2
+    public BankAccount()
+    {
+        balance = 0;
+        name = "";
+        accountNumber = 0;
+        
+    }
+    
+    
+    public BankAccount(double a, String b)
+    {
+        balance = a;
+        name = b;
+        accountsCreated +=1;
+        accountNumber = 10000000 + accountsCreated;
+        if (accountsCreated % 100 == 0)
+        {
+            balance += 100;
+        }
+        
+    }
+    
+    //Task 3
+    //Getters
+
+    public double getBalance()
+    {
+        return balance;
+    }
+    
+    public String getName()
+    {
+        return name;
+    }
+    
+    public int getAccountNumber()
+    {
+        return accountNumber;
+    }
+    
+    //Setters
+    public void setBalance(double b)
+    {
+        balance = b;
+    }
+    
+    public void setName(String b)
+    {
+        name = b;
+    }
+    
+    
+    //Task 5
+    public String toString()
+    {
+        return (name+"'s account " + accountNumber+" has a balance of $" + (int)balance);
+    }
+//Task 7
+    public void deposit(double amount)
+    {
+        if (amount<0)
+        {
+            System.out.println("Invalid deposit amount.");
+        }
+        else
+        {
+            balance += amount;
+        }
+        
+    }
+    
+    public double withdrawl(double amount)
+    {
+        if (amount>balance)
+        {
+            balance -= 10;
+            return 0;
+        }
+        else
+        {
+            balance -= amount;
+            return amount;
+        }
+        
+    }
+
+    
+    
+    
+
+}
+
