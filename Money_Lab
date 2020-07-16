@@ -1,0 +1,403 @@
+//main
+//constructorFunctions
+//accessorFunctions
+//checkingFunctions
+//addingFunctions
+//calculationFunction
+
+public class Main {
+
+    public static void main(String[] args) {
+    	
+    	//Test Code
+    	int[] a = createMoney(4,115);
+        System.out.println("5 15: " + a[0] + " " + a[1]);
+        int[] b = copyMoney(a);
+        a[1] = 50;
+        System.out.println("5 50: " + a[0] + " " + a[1]);
+        System.out.println("5 15: " + b[0] + " " + b[1]);
+        System.out.println("Dollars: 5: " + dollars("$5.50"));
+        System.out.println("Cents: 50: " + cents("$5.50"));
+        System.out.println("$5.50: " + moneyToString(a));
+        System.out.println("five dollars and fifty cents: " + moneyToText(a));
+        System.out.println("isGreater: true: " + isGreaterThan(a,b));
+        System.out.println("isEqual: false: " + isEqual(a,b));
+        a = createMoney(1,10);
+        b = createMoney(2,20);
+        adder(a,b);
+        System.out.println("sb $3.30: " + moneyToString(a));
+        System.out.println("sb $2.20: " + moneyToString(b));
+        b = add(a,b);
+        System.out.println("sb $3.30: " + moneyToString(a));
+        System.out.println("sb $5.50: " + moneyToString(b));
+
+
+    }//End main
+    
+    public static int[] createMoney (int dollars, int cents)
+    {
+    	//if cents > 99, leftover cents added to dollars
+        if (cents>99)
+        {
+            dollars = (cents / 100) + dollars;
+            cents = cents % 100;
+
+        }
+        
+        int[] money = new int[2];
+        money[0] = dollars;
+        money[1] = cents;
+        return money;
+
+    }//end createMoney
+    
+    public static int[] copyMoney (int[] money)
+    {
+    	//new array created
+    	int[]copy = new int [2];
+    	
+    	//for loop to add new values
+    	for (int i = 0;i<2;i++)
+    	{
+    		copy[i] = money[i];
+    	}
+    	return copy;
+    }//end createMoney
+    
+    public static String dollars(String a)
+    {
+    	//returns numbers between & and . (dollars)
+    	int i = 0;
+    	String dollar = a.substring(a.indexOf("$")+1,a.indexOf("."));
+        return dollar;
+    	
+    }//end dollars
+    
+    public static String cents(String a)
+    {
+    	//returns numbers from . (cents)
+
+    	int i = 0;
+    	String cent = a.substring(a.indexOf(".")+1);
+        return cent;
+    	
+    }//end cents
+    
+    public static String moneyToString(int[] money)
+    {
+    	
+    	
+    	String word = "";
+    	
+    	//when cents < 10, add 0 before it in printing
+    	if (money[1]<10)
+    	{
+    		word = "$"+money[0]+".0"+money[1];
+    	}
+    	
+    	//when cents > 10, print regularly
+
+    	else
+    	{
+        	word = "$"+money[0]+"."+money[1];
+
+    	}
+    	return word;
+    }//end moneyToString
+    
+    
+    public static String moneyToText(int[]money)
+    {
+    	String word = "";
+    	
+    	//if dollars has hundreds value 
+    	if(money[0]>100)
+    	{
+    		if(money[0]/100 == 1)
+    			word = "one hundred";
+    		if(money[0]/100 == 2)
+    			word = "two hundred";
+    		if(money[0]/100 == 3)
+    			word = "three hundred";
+    		if(money[0]/100 == 4)
+    			word = "four hundred";
+    		if(money[0]/100 == 5)
+    			word = "five hundred";
+    		if(money[0]/100 == 6)
+    			word = "six hundred";
+    		if(money[0]/100 == 7)
+    			word = "seven hundred";
+    		if(money[0]/100 == 8)
+    			word = "eight hundred";
+    		if(money[0]/100 == 9)
+    			word = "nine hundred";
+    		word = word + " and ";
+    		
+    	}
+    	
+    	
+    	if(money[0]>=10||money[0]<100)
+    	{
+    		//if dollars is in the tens
+    		if((money[0]/10)%10 == 1)
+    		{
+    			if(money[0]%100 == 10)
+    				word = word + "ten";
+    			if(money[0]%100 == 11)
+    				word = word + "eleven";
+    			if(money[0]%100 == 12)
+    				word = word + "twelve";
+    			if(money[0]%100 == 13)
+    				word = word + "thirteen";
+    			if(money[0]%100 == 14)
+    				word = word + "fourteen";
+    			if(money[0]%100 == 15)
+    				word = word + "fifteen";
+    			if(money[0]%100 == 16)
+    				word = word + "sixteen";
+    			if(money[0]%100 == 17)
+    				word = word + "seventeen";
+    			if(money[0]%100 == 18)
+    				word = word + "eighteen";
+    			if(money[0]%100 == 19)
+    				word = word + "nineteen";
+    			
+    		}
+    		
+    		//if dollars has tens digit
+    		if((money[0]/10)%10 == 2)
+    			word = word+"twenty";
+    		if((money[0]/10)%10 == 3)
+    			word = word+"thirty";
+    		if((money[0]/10)%10 == 4)
+    			word = word+"forty";
+    		if((money[0]/10)%10 == 5)
+    			word = word+"fifty";
+    		if((money[0]/10)%10 == 6)
+    			word = word+"sixty";
+    		if((money[0]/10)%10 == 7)
+    			word = word+"seventy";
+    		if((money[0]/10)%10 == 8)
+    			word = word+"eighty";
+    		if((money[0]/10)%10 == 9)
+    			word = word+"ninety";
+    		
+    		//if dollars has ones digits
+    		if((money[0]/10)%10 != 1)
+    		{
+    			if(money[0]%10 == 1)
+    				word = word + " one";
+    			if(money[0]%10 == 2)
+    				word = word + " two";
+    			if(money[0]%10 == 3)
+    				word = word + " three";
+    			if(money[0]%10 == 4)
+    				word = word + " four";
+    			if(money[0]%10 == 5)
+    				word = word + " five";
+    			if(money[0]%10 == 6)
+    				word = word + " six";
+    			if(money[0]%10 == 7)
+    				word = word + " seven";
+    			if(money[0]%10 == 8)
+    				word = word + " eight";
+    			if(money[0]%10 == 9)
+    				word = word + " nine";
+    			
+    			
+    			
+    		}
+    		if(money[0] ==0)
+    			word = "zero";
+    		
+    		word = word + " dollars and ";
+    		
+    		
+    		if(money[1]>=10||money[1]<100)
+        	{
+    			//if cents is in tens
+        		if((money[1]/10 == 1))
+        		{
+        			if(money[1]%100 == 10)
+        				word = word + "ten";
+        			if(money[1]%100 == 11)
+        				word = word + "eleven";
+        			if(money[1]%100 == 12)
+        				word = word + "twelve";
+        			if(money[1]%100 == 13)
+        				word = word + "thirteen";
+        			if(money[1]%100 == 14)
+        				word = word + "fourteen";
+        			if(money[1]%100 == 15)
+        				word = word + "fifteen";
+        			if(money[1]%100 == 16)
+        				word = word + "sixteen";
+        			if(money[1]%100 == 17)
+        				word = word + "seventeen";
+        			if(money[1]%100 == 18)
+        				word = word + "eighteen";
+        			if(money[1]%100 == 19)
+        				word = word + "nineteen";
+        			
+        		}
+        		
+        		//if cents has tens digit
+        		if((money[1]/10) == 2)
+        			word = word+"twenty";
+        		if((money[1]/10) == 3)
+        			word = word+"thirty";
+        		if((money[1]/10) == 4)
+        			word = word+"forty";
+        		if((money[1]/10) == 5)
+        			word = word+"fifty";
+        		if((money[1]/10) == 6)
+        			word = word+"sixty";
+        		if((money[1]/10)== 7)
+        			word = word+"seventy";
+        		if((money[1]/10) == 8)
+        			word = word+"eighty";
+        		if((money[1]/10) == 9)
+        			word = word+"ninety";
+        		
+        		//if cents has ones digit
+        		if((money[0]/10) != 1)
+        		{
+        			if(money[0]%10 == 1)
+        				word = word + " one";
+        			if(money[0]%10 == 2)
+        				word = word + " two";
+        			if(money[0]%10 == 3)
+        				word = word + " three";
+        			if(money[0]%10 == 4)
+        				word = word + " four";
+        			if(money[0]%10 == 5)
+        				word = word + " five";
+        			if(money[0]%10 == 6)
+        				word = word + " six";
+        			if(money[0]%10 == 7)
+        				word = word + " seven";
+        			if(money[0]%10 == 8)
+        				word = word + " eight";
+        			if(money[0]%10 == 9)
+        				word = word + " nine";
+        			
+        		}
+        		if (money[1] == 0)
+        		{
+        			word = word + "zero";
+        		}
+        		
+        		word = word + " cents";
+        	}
+    	}
+    	return word;
+    		
+        		
+    }//end moneyToText
+    
+    
+    public static boolean isGreaterThan(int[]m1,int[]m2)
+    {
+    	//converts to one total money value
+    	int total1 = (m1[0]*100)+m1[1];
+    	int total2 = (m2[0]*100)+m2[1];
+    	
+    	//compares money values
+    	if (total1>total2)
+    	{
+    		return true;
+    	}
+    	else
+
+    	{
+    		return false;
+    	}
+    }// end isGreaterThan
+    
+    public static boolean isEqual(int[]m1,int[]m2)
+    {
+    	//converts to one total money value
+    	int total1 = (m1[0]*100)+m1[1];
+    	int total2 = (m2[0]*100)+m2[1];
+    	
+    	//compares money values
+
+    	if (total1==total2)
+    	{
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    }//end isEqual
+    
+    public static void adder(int[]m1,int[]m2)
+    {
+    	//adds m2 to m1
+    	m1[0] = m1[0]+m2[0];
+    	m1[1] = m1[1]+m2[1];
+    }//end adder
+    
+    public static int[] add(int[]m1,int[]m2)
+    {
+    	//new array, sum added
+    	int[] sum = new int[2];
+    	sum[0] = m1[0]+m2[0];
+    	sum[1] = m1[1]+m2[1];
+    	return sum;
+    }//end add
+    
+    public static void subber(int[]m1,int[]m2)
+    {
+    	//subtracts m2 from m1
+
+    	m1[0] = m1[0]-m2[0];
+    	m1[1] = m1[1]-m2[1];
+    }//end subber
+    
+    public static int[] sub(int[]m1,int[]m2)
+    {
+    	//new array, diff added
+    	int[] diff = new int[2];
+    	diff[0] = m1[0]-m2[0];
+    	diff[1] = m1[1]-m2[1];
+    	return diff;
+    }//end sub
+    
+    public static int[] payWith20(int[]owe)
+    {
+    	//convert money to total value
+    	int total = (owe[0]*100)+owe[1];
+    	
+    	//find change, convert back to array
+    	int diff = 2000-total;
+    	int[] change = new int[2];
+    	change[0] = diff/100;
+    	change[1] = diff%100;
+    	return change;
+    	
+    	
+    }//end payWith20
+    
+    public static int[] applyInterest(int[]balance,int interest)
+    {
+    	//convert interest to double decimal
+    	double realInt = interest/100;
+    	
+    	//create total amount
+    	double amount = (balance[0]*100) + balance[1];
+    	amount = amount + (amount*realInt);
+    	int total = (int) amount/1000;
+    	int[] change = new int[2];
+    	
+    	//Convert back to array
+    	change[0] = total/100;
+    	change[1] = total%100;
+    	return change;
+    	
+    }//end applyInterest
+    
+    
+
+}//end Class
