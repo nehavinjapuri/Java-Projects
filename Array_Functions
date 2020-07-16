@@ -1,0 +1,211 @@
+//Maximum
+public static int min(int a, int b)
+    {
+        if (a>b)
+        {
+            return b;
+        }
+        else
+            return a;
+    }
+
+
+//Minimum
+    public static int min(int[] a)
+    {
+//compares all numbers
+        int lowest = 1000000;
+        for (int i = 0; i<a.length;i++)
+        {
+            if (a[i] < lowest)
+            {
+                lowest = a[i];
+            }
+        }
+        return lowest;
+    }
+
+    //Add
+    public static int[] add(int [] a, int[] b)
+    {
+	//adds smaller array to bigger one
+        if (a.length > b.length)
+        {
+            for (int i = 0; i<b.length; i++)
+            {
+                a[i] = a[i] + b[i];
+            }
+            return a;
+
+        }
+        else if (b.length > a.length)
+        {
+            for (int i = 0; i<a.length; i++)
+            {
+                b[i] = b[i] + a[i];
+            }
+            return b;
+
+        }
+        else
+        {
+            return b;
+        }
+
+    }
+
+//Mode
+    public static int mode(int [] a)
+    {
+        //counts total of winner, prints winner
+        int winner = a[0];
+        int winnerCount = 0;
+        int currentCount = 0;
+        for (int i = 0; i <a.length; i++)
+        {
+            currentCount = 0;
+            for (int j=0; j<a.length; i++)
+            {
+                if (a[j] == a[i])
+                    currentCount++;
+            }
+            if (currentCount> winnerCount){
+                winnerCount = currentCount;
+                winner = a[i];
+            }
+
+        }
+
+        return winner;
+
+    }
+
+//Pretty Print
+    public static String pp(int[]a)
+    {
+       //traverses through array while adding commas
+        String rv = "{";
+        for (int i =0;i<a.length-1;i++)
+        {
+            rv = rv + a[i] + ",";
+        }
+        rv = rv +a[a.length-1] +"}";
+        return rv;
+    }
+    
+  
+//Copy Array
+    public static int [] copyArray(int[] a)
+    {
+        //traverses through array to copy to other array
+        int[] copy = new int [a.length];
+        for (int i = 0; i<(a.length);i++)
+        {
+        	copy[i] = a[i];
+        }
+        return copy;
+    }
+
+//Resize
+    public static int[] resize(int[] a, int newLength)
+    {
+//finds new array length, adds numbers from index to end index
+        int [] resize = new int[newLength];
+        for (int i = 0; i <newLength;i++)
+        {
+            resize[i] = a[i];
+        }
+
+        return resize;
+
+    }
+
+//Append
+    public static int[] append(int[] a, int[] b)
+    {
+        int[] fresh = new int[a.length+b.length];
+        for (int i = 0; i < a.length; i++)
+        {
+            fresh[i] = a[i];
+        }
+        for (int j = a.length-1; j < (a.length+b.length-1); j++)
+        {
+            fresh[j] = b[j];
+        }
+
+        return fresh;
+
+    }
+
+//Remove
+    public static int[] remove(int[] a, int index)
+    {//finds index, changes to 0
+        a[index] = 0;
+        return a;
+    }
+    
+    //SubArray
+	public static int[] subArray(int[]a, int firstIncluded, int firstExcluded)
+	{
+	    int[] sub =  new int[firstExcluded-firstIncluded];
+	    for (int i = 0; i<(firstExcluded-firstIncluded); i++)
+	    {
+	        sub[i] = a[i+firstIncluded];
+	    }
+	    return sub;
+	
+	}
+
+//Bubble Sort
+	 public static void makeSorted(int[] a)
+	 {
+//if one value is greater than the one before it, they swap places
+	    int storage = 0;
+	    for (int j = 0; j<a.length-1;j++)
+	    {//goes through all numbers
+	        for (int i = 0; i <a.length -1 ;i++)
+	        {
+	            if (a[i]>a[i+1])
+	            {
+	                storage = a[i];
+	                a[i] = a[i+1];
+	                a[i+1] = storage;
+
+	            }
+
+	        }
+	    }
+	 }
+   
+   //Sort
+	 public static int[] sort(int[]a)
+	 {
+//uses copyArray to sort new array
+		 int[] fresh = copyArray(a);
+		 int storage = 0;
+		    for (int j = 0; j<fresh.length-1;j++)
+		    {
+		        for (int i = 0; i <fresh.length -1 ;i++)
+		        {
+		            if (fresh[i]>fresh[i+1])
+		            {
+		                storage = fresh[i];
+		                fresh[i] = fresh[i+1];
+		                fresh[i+1] = storage;
+
+		            }
+
+		        }
+		    }
+		    return fresh;
+		 
+	 }
+	 
+   //Merge
+	 public static int[] merge(int[] a, int[] b)
+	 {
+//using sort and append functions
+		return sort(append(a,b));
+	 }
+	 
+	 
