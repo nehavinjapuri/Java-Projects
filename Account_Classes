@@ -1,0 +1,352 @@
+//Main
+//Account Class
+//SavingsAccount Class
+//CreditCardAccount Class
+//CheckingAccount Class
+
+import java.util.Scanner;
+public class Main
+{
+    public static Account[] l = new Account[100];
+	public static void main(String[] args) {
+		menu();
+	    
+
+	}
+	
+	public static void menu()
+	{
+	    Scanner f = new Scanner(System.in);
+	    Scanner g = new Scanner(System.in);
+	    System.out.println("1. Create new account");
+	    System.out.println("2. Deposit/Pay");
+	    System.out.println("3. Withdraw/Charge");
+	    System.out.println("4. Print report of all accounts");
+	    System.out.println("5. Print all transactions");
+	    System.out.println("6. Apply Interest");
+	    System.out.println("7. 1-20 Money Deposit");
+	    System.out.println("8. Exit");
+
+
+	    int opt = f.nextInt();
+	    if (opt == 1)
+	    {
+	        System.out.println("Please enter your account type: 1 - General, 2 - Savings, 3 - Credit Card, 4 - Checking");
+	        int tip = f.nextInt();
+	        System.out.println("Please enter your balance:");
+	        double bal = f.nextDouble();
+	        System.out.println("Please enter your name:");
+	        String name = g.nextLine();
+	        if (tip == 1)
+	        {
+	            l[Account.numAccounts] = new Account(name,bal);
+	        }
+	        
+	        if (tip == 2)
+	        {
+	            l[Account.numAccounts] = new SavingsAccount(name,bal,0.07);
+	        }
+	        if (tip == 3)
+	        {
+	            System.out.println("What type of card do you want?");
+	            String cardType = g.nextLine();
+	            l[Account.numAccounts] = new CreditCardAccount(name,bal,0.07,cardType);
+	        }
+	        if (tip == 4)
+	        {
+	            l[Account.numAccounts] = new CheckingAccount(name,bal);
+	        }
+	        menu();
+	    }
+	    
+	    if (opt == 2)
+	    {
+	        System.out.println("Please enter bank account number:");
+            int ans = f.nextInt();
+            System.out.println("Please enter your amount:");
+	        double bal = f.nextDouble();
+	        l[(ans%10)-1].deposit(bal);
+	        menu();
+
+	    }
+	    
+	    if (opt == 3)
+	    {
+	        System.out.println("Please enter bank account number:");
+            int ans = f.nextInt();
+            System.out.println("Please enter your amount:");
+	        double bal = f.nextDouble();
+	        l[(ans%10)-1].withdraw(bal);
+	        menu();
+	    }
+	    
+	    if (opt == 4)
+	    {
+	        for (int i = 0; i < Account.numAccounts; i++)
+	        {
+	            if (l[i].typeC == 1)
+	            {
+	                System.out.println(l[i].toString());
+	            }
+	            
+	            if (l[i].typeC == 2)
+	            {
+	                SavingsAccount x = (SavingsAccount)l[i];
+	                System.out.println(x.toString());
+
+	            }
+	            if (l[i].typeC == 3)
+	            {
+	                CreditCardAccount y = (CreditCardAccount)l[i];
+	                System.out.println(y.toString());
+	            }
+	            if (l[i].typeC == 4)
+	            {
+	                CheckingAccount z = (CheckingAccount)l[i];
+	                System.out.println(z.toString());
+
+	            }
+	        }
+	        menu();
+
+	    }
+	    
+	    if (opt == 5)
+	    {
+	        for (int i = 0; i < Account.numAccounts; i++)
+	        {
+	            System.out.println("Account " + l[i].accNumber);
+	            for (int j = 0; j < l[i].actCount; j++)
+	            {
+	                System.out.println(l[i].transactions[j]);
+	            }
+	        }
+	        menu();
+	    }
+	    
+	    if (opt == 6)
+	    {
+	        System.out.println("Please enter bank account number:");
+            int ans = f.nextInt();
+            System.out.println("Please enter the number of months:");
+	        int bal = f.nextInt();
+	        CreditCardAccount d = (CreditCardAccount)l[(ans%10)-1];
+	        for (int i = 0; i < bal; i ++)
+	        {
+	            d.chargeInterest();
+	        }
+	        
+	        menu();
+	    }
+	    
+	    if (opt == 7)
+	    {
+	        for (int i = Account.numAccounts; i < 20; i++)
+	        {
+	            l[i] = new Account();
+	        }
+	        
+	        for (int j = 0; j<20; j++)
+	        {
+	            l[j].balance += (j+1);
+	        }
+	        menu();
+	    }
+	    
+	    if (opt == 8)
+	    {
+	        System.out.println("Bye!");
+	    }
+	    
+	    
+	    
+	    
+	}
+}
+
+import java.util.Scanner;
+public class Account
+{
+    Scanner s = new Scanner(System.in);
+
+    int typeC = 1;
+    String name;
+    int accNumber;
+    double balance;
+    static int numAccounts = 0;
+    int actCount;
+    String[] transactions;
+    
+    public Account()
+    {
+        name = "";
+        numAccounts++;
+        accNumber = 10000000 + numAccounts;
+        balance = 0;
+        transactions = new String[100];
+        transactions[0] = "No transactions.";
+        actCount = 0;
+    }
+    
+    public Account(String a, double b)
+    {
+        numAccounts++;
+        name = a;
+        accNumber = 10000000 + numAccounts;
+        balance = b;
+        transactions = new String[100];
+        transactions[0] = "No transactions.";
+        actCount = 0;
+    }
+    
+    public String toString()
+    {
+        return "Name: "+name+", Acct: "+accNumber+", Balance: $" + balance;
+    }
+    
+    
+    
+    public void transaction (double amt)
+    {
+        balance += amt;
+        if (amt<0)
+        {
+            transactions[actCount] = ("\tWithdraw " + amt);
+            actCount++;
+        }
+        else
+        {
+            transactions[actCount] = ("\tDeposit " + amt);
+            actCount++;
+        }
+        
+    }
+    
+   
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+
+}
+
+    
+    
+    
+
+}
+
+public class SavingsAccount extends Account 
+{
+    double intRate;
+    
+    public SavingsAccount()
+    {
+        super();
+        intRate = 0;
+        typeC = 2;
+    }
+    
+    public SavingsAccount(String a, double b, double c)
+    {
+        super(a,b);
+        intRate = c;
+        typeC = 2;
+
+    }
+    
+    public void applyInterest()
+    {
+        balance *= (intRate+1);
+    }
+    
+    public String toString()
+    {
+        return "Name: "+ name +", Savings Acct: "+accNumber+", Balance: $"+balance+", Interest: "+(intRate*100)+"%";
+    }
+
+}
+
+public class CreditCardAccount extends Account 
+{
+	
+    double intRate;
+    String type;
+    
+    public CreditCardAccount()
+    {
+        super();
+        intRate = 0;
+        type = "";
+        typeC = 3;
+    }
+    
+    public CreditCardAccount(String a, double b, double c, String d)
+    {
+        super(a,b);
+        intRate = c;
+        type = d;
+        typeC = 3;
+
+    }
+    
+    public void chargeInterest()
+    {
+        balance = balance - (intRate+1)*balance;
+    }
+    
+    public void payCharge (double amt)
+    {
+        balance += amt;
+        if (amt<0)
+        {
+            transactions[actCount] = ("\tPay " + amt);
+            actCount++;
+        }
+        else
+        {
+            transactions[actCount] = ("\tCharge " + amt);
+            actCount++;
+        }
+        
+    }
+    
+    public String toString()
+    {
+        String a = ("Name: "+ name +", "+type+" Acct: "+accNumber+", Balance: $"+balance+", Interest: "+(intRate*100)+"%");
+        return a;
+    }
+}
+
+	
+
+
+public class CheckingAccount extends Account 
+{
+    public CheckingAccount()
+    {
+        super();
+        typeC = 4;
+    }
+    
+    public CheckingAccount(String n, double b)
+    {
+        super(n,b);
+        typeC = 4;
+    }
+    public String toString()
+    {
+        return "Name: "+ name +", Checking Acct: "+accNumber+", Balance: $"+balance;
+    }
+}
+
+
